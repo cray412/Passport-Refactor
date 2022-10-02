@@ -3,6 +3,8 @@ const expresslayouts = require('express-ejs-layouts');
 
 const app = express();
 
+app.use(express.static('public'));
+
 app.use(expresslayouts);
 app.set('view engine', 'ejs');
 
