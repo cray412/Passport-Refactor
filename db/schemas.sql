@@ -1,5 +1,4 @@
--- TODO
 
-DROP DATABASE IF EXISTS cocktail_curator_db;
-CREATE DATABASE cocktail_curator_db;
-USE cocktail_curator_db;
+DROP DATABASE IF EXISTS passport_test_db;
+CREATE DATABASE passport_test_db;
+USE passport_test_db;

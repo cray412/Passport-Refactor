@@ -20,9 +20,9 @@
     "nodemon": "^2.0.20"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "node app.js",
     "seed": "node ./seeds/seed.js",
-    "dev": "nodemon server.js"
+    "dev": "nodemon app.js"
   },
   "name": "cocktail-curator-2.0",
   "description": "",
