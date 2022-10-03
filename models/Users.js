@@ -27,7 +27,7 @@ User.init(
     },
     is21: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: true
     }
   },
   {

@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const { Users } = require('../models');
+const Sequelize = require('sequelize');
 // const { ensureAuthenticated } = require('../config/auth');
 
 const User = require('../models/Users');
 
 
-router.get('/login', (req, res) => res.render('login'));
-router.get('/register', (req, res) => res.render('register'));
+router.get('/login', async (req, res) => res.render('login'));
+router.get('/register', async (req, res) => res.render('register'));
 
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
     const { name, email, password, password2 } = req.body;
     let errors = [];
 
@@ -35,9 +37,9 @@ router.post('/register', (req, res) => {
         });
     }
     else {
-        console.log(req.body)
-        res.send('User Registered');
-        User.findOne({ email: email })
+        User.findOne({
+            where: { email: email }
+        })
             .then(user => {
                 if (user) {
                     errors.push({ msg: 'Email is already being used' });
@@ -55,6 +57,7 @@ router.post('/register', (req, res) => {
                         email,
                         password
                     });
+                    console.log(newUser);
 
                     bcrypt.genSalt(10, (err, salt) =>
                         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -62,12 +65,12 @@ router.post('/register', (req, res) => {
 
                             newUser.password = hash;
 
-                            newUser.save()
-                                .then(user => {
-                                    req.flash('success_msg', 'You are now registered. Please log in.');
-                                    res.redirect('/users/login');
-                                })
-                                .catch(err => console.log(err));
+                            Users.create(newUser)
+                            .then(user => {
+                                req.flash('success_msg', 'You are now registered. Please log in.');
+                                res.redirect('/users/login');
+                            })
+                            .catch(err => console.log(err));              
                         }))
                 }
             });
