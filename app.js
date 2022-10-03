@@ -1,5 +1,6 @@
 const express = require('express');
 const expresslayouts = require('express-ejs-layouts');
+const sequelize = require('./config/connection');
 
 const app = express();
 
@@ -7,6 +8,9 @@ app.use(express.static('public'));
 
 app.use(expresslayouts);
 app.set('view engine', 'ejs');
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.use('/', require('./routes/index'));
 app.use('/users', require('./routes/users'));
